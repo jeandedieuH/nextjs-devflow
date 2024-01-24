@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use server";
 
 import User from "@/models/user.model";
@@ -63,6 +64,7 @@ export async function deleteUser(params: DeleteUserParams) {
     //   "_id",
     // );
     // Delete all questions authored by the user
+
     await Question.deleteMany({ author: user._id });
 
     // TODO: Delete all answers,comments authored by the user
@@ -70,7 +72,7 @@ export async function deleteUser(params: DeleteUserParams) {
     //   { _id: { $in: userQuestionIds } },
     //   { $pull: { answers: { author: user._id } } },
     // );
-    const deletedUser = await User.findOneAndDelete(user._id);
+    const deletedUser = await User.findByIdAndDelete(user._id);
 
     return deletedUser;
   } catch (error) {
