@@ -20,11 +20,20 @@ import { Editor } from "@tinymce/tinymce-react";
 import { Badge } from "../ui/badge";
 import Image from "next/image";
 import { createQuestion } from "@/lib/actions/question.action";
+import { useRouter, usePathname } from "next/navigation";
 
 const type: any = "create";
-const Question = () => {
+
+interface Props {
+  appUserId: string;
+}
+
+const Question = ({ appUserId }: Props) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const editorRef = useRef(null);
+  const router = useRouter();
+  const pathname = usePathname();
+
   // 1. Define your form.
   const form = useForm<z.infer<typeof QuestionsSchema>>({
     resolver: zodResolver(QuestionsSchema),
@@ -40,8 +49,16 @@ const Question = () => {
     setIsSubmitting(true);
 
     try {
-      await createQuestion({});
+      await createQuestion({
+        title: values.title,
+        content: values.explanation,
+        tags: values.tags,
+        author: JSON.parse(appUserId),
+        path: pathname,
+      });
+
       // navigate to home page
+      router.push("/");
     } catch (error) {
     } finally {
       setIsSubmitting(false);
@@ -112,7 +129,6 @@ const Question = () => {
                 <span className="text-primary-500">*</span>
               </FormLabel>
               <FormControl className="mt-3.5">
-                {/* TODO: Add editor */}
                 <Editor
                   apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
                   onInit={(evt, editor) => {
