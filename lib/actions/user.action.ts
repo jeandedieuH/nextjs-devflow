@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use server";
 
 import User from "@/models/user.model";
@@ -65,6 +64,7 @@ export async function deleteUser(params: DeleteUserParams) {
     // );
     // Delete all questions authored by the user
 
+    // @ts-ignore //
     await Question.deleteMany({ author: user._id });
 
     // TODO: Delete all answers,comments authored by the user
