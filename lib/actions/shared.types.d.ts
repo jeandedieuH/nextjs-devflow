@@ -23,7 +23,7 @@ export interface CreateAnswerParams {
   path: string;
 }
 export interface GetAnswersParams {
-  questionId: string;
+  answerId: string;
   sortBy?: string;
   page?: number;
   pageSize?: number;

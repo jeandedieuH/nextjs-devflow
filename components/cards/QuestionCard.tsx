@@ -4,17 +4,19 @@ import Metric from "../shared/Metric";
 import { formatNumber, getTimestamp } from "@/lib/utils";
 
 interface QuestionProps {
+  clerkId?: string | null;
   _id: string;
   title: string;
   tags: { _id: string; name: string }[];
   author: { _id: string; name: string; picture: string };
   answers: Array<object>;
   views: number;
-  upvotes: number;
+  upvotes: string[];
   createdAt: Date;
 }
 
 const QuestionCard = ({
+  clerkId,
   _id,
   title,
   tags,
@@ -57,7 +59,7 @@ const QuestionCard = ({
         <Metric
           imgUrl="/assets/icons/like.svg"
           alt="Upvotes"
-          value={formatNumber(upvotes)}
+          value={formatNumber(upvotes.length)}
           title="Votes"
           textStyles="small-medium text-dark400_light800"
         />

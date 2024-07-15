@@ -39,3 +39,9 @@ export function formatNumber(number: number): string {
 
   return formattedNumber;
 }
+
+export function getJoinedDate(date: Date): string {
+  const month: string = date.toLocaleString("default", { month: "long" });
+  const year: number = date.getFullYear();
+  return `${month} ${year}`;
+}
